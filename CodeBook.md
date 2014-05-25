@@ -43,7 +43,7 @@ Tidy data set contains the average of all feature standard deviation and mean va
  4. Replaced `BodyBody` with `Body`
 
 It should be noted that the variable names are formatted in camelCase, as described in 
-[Google R Styde Guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml 
+[Google R Styde Guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml). 
 
 #### Sample of renamed variables compared to original variable name
 
