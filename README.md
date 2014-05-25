@@ -15,6 +15,8 @@ download.data()
 run.analysis()
 ```
 
-In the case the Samsung data is already unzipped and available in the current directory, the processing function can be called straight away.
+In the case the Samsung data is already unzipped and directory with the dataset is available as
+ `UCI HAR Dataset` subdirectory of the current directory, the processing function `run.analysis()` can be 
+ called straight away.
 
 
