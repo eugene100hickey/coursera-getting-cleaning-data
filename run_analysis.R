@@ -37,6 +37,7 @@ download.data <- function(){
   file <- 'dataset.zip'
   download(url,file)
   unzip(file)
+  print("Dataset downloaded. Please, proceed with run.analysis()")
 }
 
 # Loads and processes dataset of given type (train or test)
