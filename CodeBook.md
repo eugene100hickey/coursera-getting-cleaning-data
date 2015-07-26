@@ -1,14 +1,16 @@
 # Code Book for run_analysis.R
-## Variables
 
- R Programme for the Course Project in Getting and Cleaning Data from Coursera
+
+ R Programme for the Course Project in Getting and Cleaning Data from Coursera.
+ 
  Programme accepts biometric data from a Samsung phone and does a Split-Analyse-Combine
+ 
  Written 26th July 2015
 
-
-activity_labels  - these are the 6 different types of activity undertaken by the trial subjects
-features  - these are the 561 types of measurement taken by the Samsung
-features_mean_std  - these are the 79 types of measurement of interest, those that involve mean or standard deviation
+## Variables
+*activity_labels  - these are the 6 different types of activity undertaken by the trial subjects
+*features  - these are the 561 types of measurement taken by the Samsung
+*features_mean_std  - these are the 79 types of measurement of interest, those that involve mean or standard deviation
 
 
 Samsung_data  - a function to read in the data
