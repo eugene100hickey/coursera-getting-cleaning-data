@@ -8,9 +8,10 @@
  Written 26th July 2015
 
 ## Variables
-*activity_labels  - these are the 6 different types of activity undertaken by the trial subjects
-*features  - these are the 561 types of measurement taken by the Samsung
-*features_mean_std  - these are the 79 types of measurement of interest, those that involve mean or standard deviation
+*activity_labels*  - these are the 6 different types of activity undertaken by the trial subjects
+
+*features*  - these are the 561 types of measurement taken by the Samsung
+*features_mean_std*  - these are the 79 types of measurement of interest, those that involve mean or standard deviation
 
 
 Samsung_data  - a function to read in the data
