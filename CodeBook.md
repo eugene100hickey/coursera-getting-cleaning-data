@@ -1,9 +1,9 @@
-## Code Book for run_analysis.R
-# Variables
+# Code Book for run_analysis.R
+## Variables
 
-# R Programme for the Course Project in Getting and Cleaning Data from Coursera
-# Programme accepts biometric data from a Samsung phone and does a Split-Analyse-Combine
-# Written 26th July 2015
+ R Programme for the Course Project in Getting and Cleaning Data from Coursera
+ Programme accepts biometric data from a Samsung phone and does a Split-Analyse-Combine
+ Written 26th July 2015
 
 
 activity_labels  - these are the 6 different types of activity undertaken by the trial subjects
