@@ -1,116 +1,46 @@
-# Coursera Getting and Cleaning Data.
-# Course Project 
+library(dplyr)
+setwd("C:/Users/Eugene/Desktop/Coursera/Getting and Cleaning Data/getdata-projectfiles-UCI HAR Dataset/UCI HAR Dataset")
 
-# Prepare tools
 
-if(require("downloader")){
-  print("downloader is loaded correctly")
-} else {
-  print("trying to install downloader")
-  install.packages("downloader")
-  if(require(downloader)){
-    print("downloader installed and loaded")
-  } else {
-    stop("could not install required packages (downloader)")
-  }
+activity_labels <- read.table("./activity_labels.txt")$V2
+features <- read.table("./features.txt")$V2
+features_mean_std <- grepl("mean|std", features)
+
+
+Samsung_data <- function(trial){
+  X_file_name = paste("./", trial, "/X_", trial, ".txt", sep = "")
+  y_file_name = paste("./", trial, "/y_", trial, ".txt", sep = "")
+  subject_file_name = paste("./", trial, "/subject_", trial, ".txt", sep = "")
+  
+  X_data <- read.table(X_file_name)
+  names(X_data) <- features
+  X_data_meanstd = X_data[, features_mean_std]
+  
+  y_data <- read.table(y_file_name)
+  names(y_data) = c("Activities")
+  
+  
+  subject_data <- read.table(subject_file_name)
+  names(subject_data) = c("Subjects")
+  subject_data$trial = trial
+  
+  trial_data = cbind(subject_data, y_data, X_data_meanstd)
+  
+  trial_data
 }
 
-if(require("data.table")){
-  print("data.table is loaded correctly")
-} else {
-  print("trying to install data.table")
-  install.packages("data.table")
-  if(require(data.table)){
-    print("data.table installed and loaded")
-  } else {
-    stop("could not install required packages (data.table)")
-  }
-}
+test_data = Samsung_data("test")
+train_data = Samsung_data("train")
+total_data = rbind(test_data, train_data)
+total_data = arrange(total_data, Subjects, Activities)
 
-print("To download data and prepare tidy data set, run download.data() and run.analysis()")
+total_data$Activities = activity_labels[total_data$Activities]
 
+gathered = gather(total_data, Variables, Measurements, -Subjects, -Activities, -trial)
 
-# Download dataset
+aggdata = aggregate(gathered$Measurements, by=list(Subjects = gathered$Subjects,Activities = gathered$Activities, Variables = gathered$Variables, TestOrTrain = gathered$trial), FUN=mean)
 
-download.data <- function(){
-  url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
-  file <- 'dataset.zip'
-  download(url,file)
-  unzip(file)
-  print("Dataset downloaded. Please, proceed with run.analysis()")
-}
+tidy_data = spread(aggdata, Variables, x)
 
-# Loads and processes dataset of given type (train or test)
+write.table(tidy_data, file = "tidy_data.txt", row.names = FALSE)
 
-load.dataset <- function(type, selected.features, activity.labels){
-  
-  path <- paste(type, '/', sep = '')
-  feature.vectors.file <- paste(path, 'X_', type, '.txt', sep = '')
-  activity.labels.file <- paste(path, 'y_', type, '.txt', sep = '')
-  subject.ids.file <- paste(path, 'subject_', type, '.txt', sep= '')
-
-  # Load data files
-  feature.vectors.data <- read.table(feature.vectors.file)[,selected.features$id]
-  activity.labels.data <- read.table(activity.labels.file)[,1]
-  subject.ids.data <- read.table(subject.ids.file)[,1]
-  
-  # Name variables 
-  names(feature.vectors.data) <- selected.features$label
-  feature.vectors.data$label <- factor(activity.labels.data, levels=activity.labels$id, labels=activity.labels$label)
-  feature.vectors.data$subject <- factor(subject.ids.data)
-  
-  # Return processed dataset
-  feature.vectors.data
-
-}
-
-run.analysis <- function(){
-  setwd('UCI HAR Dataset/')
-
-  # Load id->feature label data
-  feature.vector.labels.data <- read.table('features.txt', col.names = c('id','label'))
-  
-  # Select only the measurements on the mean and standard deviation for each measurement.
-  # Using grepl we can return logical vector of matching columns.
-  # Features we want to select have -mean() or -std() as a part of the name.
-  selected.features <- subset(feature.vector.labels.data, grepl('-(mean|std)\\(', feature.vector.labels.data$label))
-
-  # Load id->activity label data
-  activity.labels <- read.table('activity_labels.txt', col.names = c('id', 'label'))
-
-  # Read train and test data sets
-  print("Read and process training dataset")
-  train.df <- load.dataset('train', selected.features, activity.labels)
-  print("Read and process test dataset")
-  test.df <- load.dataset('test', selected.features, activity.labels)
-
-  # Merge train and test sets
-  print("Merge train and test sets")
-  merged.df <- rbind(train.df, test.df)
-  print("Finished dataset loading and merging")
-  
-  # Convert to data.table for making it easier and faster 
-  # to calculate mean for activity and subject groups.
-  merged.dt <- data.table(merged.df)
-  
-  # Calculate the average of each variable for each activity and each subject. 
-  tidy.dt <- merged.dt[, lapply(.SD, mean), by=list(label,subject)]
-  
-  # Tidy variable names
-  tidy.dt.names <- names(tidy.dt)
-  tidy.dt.names <- gsub('-mean', 'Mean', tidy.dt.names)
-  tidy.dt.names <- gsub('-std', 'Std', tidy.dt.names)
-  tidy.dt.names <- gsub('[()-]', '', tidy.dt.names)
-  tidy.dt.names <- gsub('BodyBody', 'Body', tidy.dt.names)
-  setnames(tidy.dt, tidy.dt.names)
-
-  # Save datasets
-  setwd('..')
-  write.csv(merged.dt, file = 'uci-har-raw-data.csv', row.names = FALSE)
-  write.csv(tidy.dt,
-            file = 'uci-har-tidy-data.csv',
-            row.names = FALSE, quote = FALSE)
-
-  
-  print("Finished processing. Tidy dataset is written to uci-har-tidy-data.csv")
-}
