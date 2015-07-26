@@ -8,6 +8,7 @@ This run_analysis.R script aims to produce a tidy data set from the suite of dat
 7. Writes the resulting file into a .txt file
 
 
+
 ###acknowledgements
 1. I used the project from [Deduce](https://github.com/deduce/Getting-and-Cleaning-Data-Project/blob/master/run_analysis.R) last year to produce an output to check against my own. I also learned a lot from the flow of this script.
 2. I forked the github repo from [mjlassila](https://github.com/mjlassila/coursera-getting-cleaning-data), this was easier than starting my own repo for this. Didn't use any of his work as a basis for the R scripting, it's just that I am a bit rusty of the process of setting up a repo from scratch.
