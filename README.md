@@ -1,10 +1,17 @@
 This run_analysis.R script aims to produce a tidy data set from the suite of data contained within the UCI HAR Dataset.In broad terms, it performs the following steps:
+
 1. Gets the data from the *test* and the *train* directories and mungs them into a suitable format
+
 2. Excludes all columns of measurement that don't concern mean or standard deviation
+
 3. Combines the two data.frames into one large data frame.
+
 4. Gathers the data based on the measurement type.
+
 5. Calculates the mean of the data for each combination of *Activity Type*, *Subject*, and *Measurement Type*.
+
 6. Spreads the data back into a wide data.frame
+
 7. Writes the resulting file into a .txt file
 
 
