@@ -14,6 +14,8 @@
 
 *features_mean_std*  - these are the 79 types of measurement of interest, those that involve mean or standard deviation
 
+
+
 *Samsung_data*  - a function to read in the data, takes input of a *trial* parameter which in this case will be either test or train. The variables below are internal to *Samsung_data*.
 
 *X_file_name* - set of actual measurements from the Samsung. Has 561 columns corresponding to the different *features*. Will be either X_test.txt or X_train.txt. In the case of X_test, it has 2947 rows.
@@ -32,7 +34,9 @@
 
 
 
+
 *test_data* - *Samsung_data* data from the directory, test.
+
 *train_data* - *Samsung_data* data from the directory train.
 
 total_data* - binds the data.frames from *test_data* and *train_data*. Rows then ordered by "Subjects" and "Activities". The we add meaningful labels to the activities, Walking instead of 1 for example.
