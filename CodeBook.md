@@ -17,7 +17,9 @@
 *Samsung_data*  - a function to read in the data, takes input of a *trial* parameter which in this case will be either test or train. The variables below are internal to *Samsung_data*.
 
 *X_file_name* - set of actual measurements from the Samsung. Has 561 columns corresponding to the different *features*. Will be either X_test.txt or X_train.txt. In the case of X_test, it has 2947 rows.
+
 *y_file_name* - for each of the rows of *X_file_name*,  *y_file_name* give the corresponding activity by number. It has one column. In the case of y_test, it has 2947 rows.
+
 *subject_file_name* - for each of the rows of *X_file_name*,  *subject_file_name* give the corresponding subject by number. These numbers run from 1:30. Nine of them are in test, the rest in train. It has one column. In the case of subject_test, it has 2947 rows.
 
 *X_data* - the data from *X_file_name* in data.frame class. The column names are set to the corresponding values from *features*. *features_mean_std* is used to reduce the number of columns from 561 to 79.
